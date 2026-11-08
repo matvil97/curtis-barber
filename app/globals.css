@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+/*
+ * Direction « Néon & arche » : tirée des photos du salon.
+ * Fond blanc chaud, taupe des murs, crème du mobilier bouclé,
+ * arches des miroirs et violet néon de l'enseigne.
+ */
+@theme {
+  --color-paper: #faf8f5;
+  --color-white: #ffffff;
+  --color-cream: #f1ece6;
+  --color-sand: #e7e1da;
+  --color-ink: #121014;
+  --color-ink-soft: #2a262c;
+  --color-taupe: #6e625a;
+  --color-line: #e4ddd5;
+  --color-violet: #6d28d9;
+  --color-violet-deep: #4c1d95;
+  --color-violet-glow: #8b5cf6;
+  --color-violet-soft: #ede9fe;
+  --color-violet-200: #ddd6fe;
+  --color-open: #15803d;
+  --color-closed: #b91c1c;
+
+  --font-display: var(--font-syne), "Arial Black", sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --breakpoint-md: 45rem; /* 720px */
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-violet);
+    color: var(--color-white);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-violet-200);
+  }
+}
+
+/* ---------- Typo ---------- */
+@utility font-italic-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+@utility eyebrow {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+/* Contour seul, comme une enseigne éteinte. */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-ink);
+}
+
+/* Lueur néon (décor uniquement, jamais porteuse de sens). */
+@utility neon-text {
+  color: var(--color-violet);
+  text-shadow: 0 0 18px rgb(139 92 246 / 0.45), 0 0 2px rgb(139 92 246 / 0.4);
+}
+
+/* Arche des miroirs */
+@utility arch {
+  border-radius: 999px 999px 28px 28px;
+}
+
+/* ---------- Keyframes (transform / opacity uniquement) ---------- */
+@keyframes cb-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cb-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes cb-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes cb-pole {
+  from { transform: translateY(0); }
+  to { transform: translateY(56px); }
+}
+@keyframes cb-pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  70%, 100% { transform: scale(3.5); opacity: 0; }
+}
+@keyframes cb-glow {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes cb-word-in {
+  from { opacity: 0; transform: translateY(0.6em) rotateX(-60deg); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cb-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes cb-msg-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cb-dots {
+  0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+
+.cb-rise { animation: cb-rise 0.9s var(--ease-out-soft) both; }
+
+.cb-marquee {
+  display: flex;
+  width: max-content;
+  animation: cb-marquee var(--marquee-duration, 26s) linear infinite;
+}
+.cb-marquee-pausable:hover .cb-marquee,
+.cb-marquee-pausable:focus-within .cb-marquee {
+  animation-play-state: paused;
+}
+
+.cb-spin { animation: cb-spin 18s linear infinite; }
+.cb-float { animation: cb-float 6s ease-in-out infinite; }
+
+/* Enseigne de barbier */
+.cb-pole {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.cb-pole::before {
+  content: "";
+  position: absolute;
+  inset: -56px 0 0;
+  background: repeating-linear-gradient(45deg, #d2452f 0 7px, #ffffff 7px 14px, #2f5bd3 14px 21px, #ffffff 21px 28px);
+  background-size: 100% 56px;
+  animation: cb-pole 1.4s linear infinite;
+}
+
+/* Voyant ouvert */
+.cb-dot-open { position: relative; }
+.cb-dot-open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: cb-pulse 2s infinite;
+}
+
+/* Halo néon des arches : un pseudo-élément flou dont seule l'opacité varie. */
+.cb-halo { position: relative; isolation: isolate; }
+.cb-halo::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: inherit;
+  background: radial-gradient(closest-side, rgb(139 92 246 / 0.55), rgb(139 92 246 / 0));
+  filter: blur(18px);
+  z-index: -1;
+  opacity: 0.55;
+  animation: cb-glow 4s ease-in-out infinite;
+}
+.cb-halo-ring {
+  box-shadow: 0 0 0 2px rgb(139 92 246 / 0.9), 0 0 24px 2px rgb(139 92 246 / 0.35), inset 0 0 18px rgb(139 92 246 / 0.25);
+}
+
+/* Mot qui change dans le hero */
+.cb-word { display: inline-block; animation: cb-word-in 0.6s var(--ease-out-soft) both; transform-origin: 50% 100%; }
+
+.cb-msg { animation: cb-msg-in 0.35s var(--ease-out-soft) both; }
+.cb-typing span { display: inline-block; animation: cb-dots 1.2s infinite; }
+.cb-typing span:nth-child(2) { animation-delay: 0.15s; }
+.cb-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+/* Placeholder (photos d'équipe à venir) */
+.cb-ph { position: relative; overflow: hidden; isolation: isolate; }
+.cb-ph::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 400px;
+  z-index: -1;
+  background: linear-gradient(90deg, transparent 0, rgb(255 255 255 / 0.55) 50%, transparent 100%);
+  animation: cb-shimmer 2.8s linear infinite;
+}
+@keyframes cb-shimmer {
+  from { transform: translateX(-400px); }
+  to { transform: translateX(400px); }
+}
+
+/* ---------- Hovers ---------- */
+.cb-btn {
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.cb-btn:hover { transform: translateY(-2px); }
+.cb-btn .cb-arrow { transition: transform 0.25s ease; }
+.cb-btn:hover .cb-arrow { transform: translateX(5px); }
+.cb-btn:hover .cb-arrow-diag { transform: translate(3px, -3px); }
+
+.cb-card {
+  transition: transform 0.35s var(--ease-out-soft), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.cb-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-violet-200);
+  box-shadow: 0 18px 40px -18px rgb(76 29 149 / 0.35);
+}
+
+.cb-zoom img { transition: transform 0.7s var(--ease-out-soft); }
+.cb-zoom:hover img { transform: scale(1.05); }
+
+.cb-member .cb-photo { transition: transform 0.5s var(--ease-out-soft); }
+.cb-member:hover .cb-photo { transform: scale(1.03); }
+.cb-member .cb-line { transition: width 0.4s ease; }
+.cb-member:hover .cb-line { width: 100%; }
+
+.cb-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0 1.5px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.3s ease;
+}
+.cb-link:hover,
+.cb-link:focus-visible { background-size: 100% 1.5px; }
+
+/* ---------- Mouvement réduit : tout couper ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
