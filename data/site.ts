@@ -222,10 +222,11 @@ export const team: TeamMember[] = [
   { name: "Tina", planityName: "TinaDtyss" },
 ];
 
-export const salonPhotos = [
-  { src: "/images/salon1.webp", alt: "Les postes de coupe : fauteuils noirs face aux miroirs en arche éclairés", caption: "Les postes" },
-  { src: "/images/salon2.webp", alt: "L'espace d'attente : canapé crème sous l'enseigne néon violette Curtis Barber", caption: "L'accueil" },
-  { src: "/images/salon3.webp", alt: "Le coin salon avec fauteuil bouclé et enseigne lumineuse", caption: "Le salon" },
+/** `src` vide = encart « Photo à venir ». Ex. : "/images/salon-postes.jpg". */
+export const salonPhotos: { src: string; alt: string; caption: string; hint: string }[] = [
+  { src: "", alt: "Les postes de coupe : fauteuils noirs face aux miroirs en arche éclairés", caption: "Les postes", hint: "Les fauteuils et les miroirs en arche" },
+  { src: "", alt: "L'espace d'attente : canapé crème sous l'enseigne néon violette Curtis Barber", caption: "L'accueil", hint: "Le canapé sous l'enseigne néon" },
+  { src: "", alt: "Le coin salon avec fauteuil bouclé et enseigne lumineuse", caption: "Le salon", hint: "Le coin salon et l'enseigne lumineuse" },
 ];
 
 export type Review = { text: string; date: string };

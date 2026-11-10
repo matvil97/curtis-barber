@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { salon, serviceCategories, serviceCount, type Service } from "@/data/site";
 import { ArrowUpRight, ClockIcon, SearchIcon } from "./ui/Icons";
 import { Reveal } from "./ui/Reveal";
@@ -11,14 +11,13 @@ const normalize = (s: string) =>
   s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
 function ServiceRow({ service, index }: { service: Service; index: number }) {
-  const reduce = useReducedMotion();
   return (
     <m.li
-      layout={!reduce}
+      layout
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      transition={reduce ? { duration: 0 } : { duration: 0.4, ease: [0.2, 0.7, 0.2, 1], delay: Math.min(index, 8) * 0.035 }}
+      transition={{ duration: 0.4, ease: [0.2, 0.7, 0.2, 1], delay: Math.min(index, 8) * 0.035 }}
       className="group grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 border-b border-line py-4 last:border-b-0 sm:grid-cols-[1fr_auto_auto]"
     >
       <div className="min-w-0">

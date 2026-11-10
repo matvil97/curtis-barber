@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-/** Mot qui change toutes les 2,2s (typographie cinétique). Figé si mouvement réduit. */
+/** Mot qui change toutes les 2,2s (typographie cinétique). */
 export function RotatingWord({ words, className = "" }: { words: string[]; className?: string }) {
   const [i, setI] = useState(0);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setInterval(() => setI((n) => (n + 1) % words.length), 2200);
     return () => window.clearInterval(id);
   }, [words.length]);

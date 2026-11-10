@@ -252,13 +252,3 @@
 .cb-link:hover,
 .cb-link:focus-visible { background-size: 100% 1.5px; }
 
-/* ---------- Mouvement réduit : tout couper ---------- */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-}

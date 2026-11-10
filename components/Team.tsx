@@ -1,5 +1,6 @@
 import { salon, team } from "@/data/site";
 import { ArrowUpRight } from "./ui/Icons";
+import { PhotoPending } from "./ui/PhotoPending";
 import { PhotoSlot } from "./ui/PhotoSlot";
 import { Reveal } from "./ui/Reveal";
 import { Accent, SectionHeading } from "./ui/SectionHeading";
@@ -32,21 +33,7 @@ export function Team() {
                   sizes="(max-width: 1024px) 45vw, 25vw"
                   className="cb-photo aspect-[3/4] bg-violet-soft"
                   placeholderClassName="cb-ph"
-                  placeholder={
-                    <svg aria-hidden="true" viewBox="0 0 100 120" className="absolute inset-0 size-full">
-                      <text
-                        x="50"
-                        y="92"
-                        textAnchor="middle"
-                        fill="#DDD6FE"
-                        fontFamily="var(--font-syne), sans-serif"
-                        fontWeight="800"
-                        fontSize="86"
-                      >
-                        {member.name[0]}
-                      </text>
-                    </svg>
-                  }
+                  placeholder={<PhotoPending label="Portrait à venir" hint={member.name} />}
                 />
               </div>
               <div className="flex flex-col gap-1.5 px-1">

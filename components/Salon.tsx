@@ -1,7 +1,8 @@
-import Image from "next/image";
 import { salon, salonPhotos } from "@/data/site";
 import { PillLink } from "./ui/Button";
 import { InstagramIcon } from "./ui/Icons";
+import { PhotoPending } from "./ui/PhotoPending";
+import { PhotoSlot } from "./ui/PhotoSlot";
 import { Reveal } from "./ui/Reveal";
 import { Accent, SectionHeading } from "./ui/SectionHeading";
 
@@ -26,12 +27,17 @@ export function Salon() {
 
         <ul className="m-0 grid list-none gap-5 p-0 sm:grid-cols-3">
           {salonPhotos.map((photo, i) => (
-            <Reveal as="li" key={photo.src} delay={i * 0.1} className={i === 1 ? "sm:translate-y-10" : undefined}>
+            <Reveal as="li" key={photo.caption} delay={i * 0.1} className={i === 1 ? "sm:translate-y-10" : undefined}>
               <figure className="cb-zoom m-0 flex flex-col gap-4">
                 <div className="cb-halo arch">
-                  <div className="cb-halo-ring arch relative aspect-[3/4] overflow-hidden bg-sand">
-                    <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 640px) 92vw, 30vw" className="object-cover" />
-                  </div>
+                  <PhotoSlot
+                    src={photo.src}
+                    alt={photo.alt}
+                    sizes="(max-width: 640px) 92vw, 30vw"
+                    className="cb-halo-ring arch aspect-[3/4] bg-sand"
+                    placeholderClassName="cb-ph"
+                    placeholder={<PhotoPending hint={photo.hint} />}
+                  />
                 </div>
                 <figcaption className="flex items-center justify-between text-sm font-semibold text-ink-soft">
                   <span>{photo.caption}</span>

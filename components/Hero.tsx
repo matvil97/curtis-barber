@@ -1,8 +1,9 @@
-import Image from "next/image";
 import { heroWords, minPrice, rating, salon, salonPhotos, serviceCount } from "@/data/site";
 import { RotatingWord } from "./RotatingWord";
 import { PillLink } from "./ui/Button";
 import { PhoneIcon } from "./ui/Icons";
+import { PhotoPending } from "./ui/PhotoPending";
+import { PhotoSlot } from "./ui/PhotoSlot";
 
 /** Badge rond qui tourne, texte sur un cercle. */
 function RotatingBadge() {
@@ -92,16 +93,16 @@ export function Hero() {
 
         <div className="cb-rise relative mx-auto w-full max-w-[440px] [animation-delay:240ms] lg:mr-0">
           <div className="cb-halo arch">
-            <div className="cb-halo-ring arch relative aspect-[4/5] overflow-hidden bg-cream">
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                preload
-                sizes="(max-width: 1024px) 90vw, 440px"
-                className="object-cover object-[50%_40%]"
-              />
-            </div>
+            <PhotoSlot
+              src={photo.src}
+              alt={photo.alt}
+              preload
+              sizes="(max-width: 1024px) 90vw, 440px"
+              className="cb-halo-ring arch aspect-[4/5] bg-cream"
+              imageClassName="object-cover object-[50%_40%]"
+              placeholderClassName="cb-ph"
+              placeholder={<PhotoPending hint={photo.hint} />}
+            />
           </div>
           <RotatingBadge />
           <div className="cb-float absolute top-8 -right-2 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-[0_18px_40px_-14px_rgb(18_16_20/0.35)] md:-right-8">
